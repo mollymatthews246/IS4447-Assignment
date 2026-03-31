@@ -7,11 +7,17 @@ type Props = {
   placeholder?: string;
 };
 
-export default function FormField({ label, value, onChangeText, placeholder }: Props) {
+export default function FormField({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+}: Props) {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
+        accessibilityLabel={label}
         placeholder={placeholder ?? label}
         value={value}
         onChangeText={onChangeText}

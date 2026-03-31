@@ -18,18 +18,12 @@ export default function StudentDetail() {
   if (!context) return null;
 
   const { students, setStudents } = context;
-
-  const student = students.find(
-    (s: Student) => s.id === Number(id)
-  );
+  const student = students.find((s: Student) => s.id === Number(id));
 
   if (!student) return null;
 
   const deleteStudent = async () => {
-    await db
-      .delete(studentsTable)
-      .where(eq(studentsTable.id, Number(id)));
-
+    await db.delete(studentsTable).where(eq(studentsTable.id, Number(id)));
     const rows = await db.select().from(studentsTable);
     setStudents(rows);
     router.back();
@@ -38,6 +32,7 @@ export default function StudentDetail() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScreenHeader title={student.name} subtitle="Student details" />
+
       <View style={styles.tags}>
         <InfoTag label="Major" value={student.major} />
         <InfoTag label="Year" value={student.year} />
@@ -48,16 +43,17 @@ export default function StudentDetail() {
         onPress={() =>
           router.push({
             pathname: '../student/[id]/edit',
-            params: { id }
+            params: { id },
           })
         }
       />
 
       <View style={styles.buttonSpacing}>
-        <PrimaryButton label="Delete" variant="danger" onPress={deleteStudent} />
-      </View>
-      <View style={styles.buttonSpacing}>
-        <PrimaryButton label="Back" variant="secondary" onPress={() => router.back()} />
+        <PrimaryButton
+          label="Delete"
+          variant="secondary"
+          onPress={deleteStudent}
+        />
       </View>
     </SafeAreaView>
   );
@@ -67,14 +63,16 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#F8FAFC',
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 18,
+    paddingTop: 10,
   },
   tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 18,
+    marginTop: 12,
+    marginBottom: 20,
   },
   buttonSpacing: {
-    marginTop: 10,
+    marginTop: 12,
   },
 });
